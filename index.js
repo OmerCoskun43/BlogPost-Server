@@ -3,6 +3,7 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const app = express();
+require("express-async-errors");
 const dbConnection = require("./configs/dbConnection");
 
 //! ENV Vars
@@ -20,6 +21,13 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+//!ROUTING WITH ROUTES
+const authRouter = require("./routes/auth.router");
+app.use("/auth", authRouter);
+
+//! USING ERROR-HANDLER MIDDLEWARE
+const errorHandler = require("./middlewares/errorHandler");
+app.use(errorHandler);
 //! MONGODB CONNECTION
 dbConnection();
 //! SERVER LISTEN
