@@ -70,4 +70,23 @@ module.exports = {
       user: user,
     });
   },
+
+  logout: async (req, res) => {
+    if (!req.headers.authorization) {
+      res.errorStatusCode = 500;
+      throw new Error("User Not Logged In");
+    }
+
+    const token = req.headers.authorization.split(" ")[1];
+
+    if (!token) {
+      res.errorStatusCode = 500;
+      throw new Error("User Not Logged In");
+    }
+
+    res.status(200).send({
+      error: false,
+      message: "User Logged Out Successfully",
+    });
+  },
 };
