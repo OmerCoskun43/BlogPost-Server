@@ -28,6 +28,11 @@ const AuthSchema = new mongoose.Schema(
       // },
       set: (password) => passwordEncrypt(password),
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
     date: {
       type: Date,
       default: new Date(),

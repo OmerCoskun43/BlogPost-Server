@@ -4,7 +4,9 @@ const Blog = require("../models/blog.model");
 
 module.exports = {
   list: async (req, res) => {
-    const Blogs = await Blog.find().sort({ createdAt: -1 });
+    const Blogs = await Blog.find()
+      .sort({ createdAt: -1 })
+      .populate(["userId", "categoryId"]);
     res.send({
       error: false,
       message: "Blog List",
@@ -15,7 +17,7 @@ module.exports = {
     const blog = await Blog.create(req.body);
     res.send({
       error: false,
-      message: "Blog Created",
+      message: "Blog Created successfully",
       blog: blog,
     });
   },
@@ -42,11 +44,22 @@ module.exports = {
     });
   },
   delete: async (req, res) => {
-    const blog = await Blog.findByIdAndDelete(req.params.id);
+    const blog = await Blog.deleteOne({ _id: req.params.id });
     res.send({
       error: false,
       message: "Blog Deleted",
       blog: blog,
+    });
+  },
+
+  myBlogs: async (req, res) => {
+    const blogs = await Blog.find({ userId: req.params.id }).sort({
+      createdAt: -1,
+    });
+    res.send({
+      error: false,
+      message: "My Blogs Listed",
+      blogs: blogs,
     });
   },
 };

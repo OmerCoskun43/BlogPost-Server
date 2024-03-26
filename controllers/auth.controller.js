@@ -72,6 +72,26 @@ module.exports = {
     });
   },
 
+  list: async (req, res) => {
+    const auths = await Auth.find().sort({ createdAt: -1 });
+    res.send({
+      error: false,
+      message: "Auth List",
+      auths: auths,
+    });
+  },
+
+  updateOne: async (req, res) => {
+    const upDateOne = await Auth.updateOne({ _id: req.params.id }, req.body, {
+      new: true,
+    });
+    res.send({
+      error: false,
+      message: "User updated successfully",
+      user: upDateOne,
+    });
+  },
+
   logout: async (req, res) => {
     if (!req.headers.authorization) {
       res.errorStatusCode = 500;

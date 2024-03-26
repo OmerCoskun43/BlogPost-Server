@@ -33,6 +33,8 @@ const authRouter = require("./routes/auth.router");
 app.use("/auth", authRouter);
 const blogRouter = require("./routes/blog.router");
 app.use("/blogs", blogRouter);
+const categoryRouter = require("./routes/category.router");
+app.use("/categories", categoryRouter);
 
 //! USING ERROR-HANDLER MIDDLEWARE
 const errorHandler = require("./middlewares/errorHandler");
