@@ -16,14 +16,23 @@ app.use(express.json());
 //! Cors Package ile Cross Origin Resource Sharing
 app.use(cors());
 
+//! AUTHENTICATION MIDDLEWARE
+app.use(require("./middlewares/authentication"));
+
 //! MAIN PAGE ROUTE
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.all("/", (req, res) => {
+  res.send({
+    error: false,
+    message: "Welcome to my Blog Site",
+    user: req.user,
+  });
 });
 
 //!ROUTING WITH ROUTES
 const authRouter = require("./routes/auth.router");
 app.use("/auth", authRouter);
+const blogRouter = require("./routes/blog.router");
+app.use("/blogs", blogRouter);
 
 //! USING ERROR-HANDLER MIDDLEWARE
 const errorHandler = require("./middlewares/errorHandler");

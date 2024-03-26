@@ -36,6 +36,7 @@ module.exports = {
       const jwtToken = jwt.sign({ id: newUser._id }, SECRET_KEY, {
         expiresIn: "1h",
       });
+
       res.status(200).send({
         error: false,
         JWT: jwtToken,
